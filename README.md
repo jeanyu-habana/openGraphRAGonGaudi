@@ -1,5 +1,5 @@
 # openGraphRAGonGaudi
-Examples for RAG Construction and Queries Locally on Intel Gaudi. The examples are compatible with Llama-Index and Optimum-Habana. The examples have been tested on a single Gaudi2 device.
+Examples for RAG Construction and Queries Locally on Intel Gaudi. The examples are compatible with Llama-Index and Optimum-Habana, LlamaIndex, and NebulaGraph Database. The examples have been tested on a single Gaudi2 device.
 
 # Installation Instructions
 
@@ -16,6 +16,25 @@ To set up your environment, please install the following libraries by running th
      ```bash
      pip install -r requirements.txt
      ```
+3. **Setup and Configure NebulaGraph Database**
+   - Install NebulaGraph database with instructions [here](https://docs.nebula-graph.io/3.0.0/2.quick-start/2.install-nebula-graph/)
+   - Run the Nebula Console
+     ```bash
+     $ ~/.nebula-up/console.sh
+     ```
+   - Create and configure a nebula space (e.g., llamaindex) from the nebula console:
+     ```bash
+     CREATE SPACE llamaindex(vid_type=FIXED_STRING(1024), partition_num=1, replica_factor=1); 
+     USE llamaindex;  
+     CREATE TAG entity(name string); 
+     CREATE EDGE relationship(relationship string); 
+     CREATE TAG INDEX entity_index ON entity(name(256)); 
+     ```
+4. **Update Nebula Connection Information in gaudi_graph_constructor.py**
+   - NEBULA_USER
+   - NEBULA_PASSWORD
+   - NEBULA_ADDRESS
+   - Nebula space
 
 ## Example
 ```bash
@@ -28,7 +47,7 @@ python gaudi_graph_constructor \
 --use_kv_cache
 ```
 ## Sample Output
-/22/2024 14:03:21 - INFO - __main__ - Single-device run. 
+/22/2024 14:03:21 - INFO - __main__ - Single-device run. 
 Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:03<00:00,  1.02s/it] 
 ============================= HABANA PT BRIDGE CONFIGURATION =========================== 
 PT_HPU_LAZY_MODE = 1 
