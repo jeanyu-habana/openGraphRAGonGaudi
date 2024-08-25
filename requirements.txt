@@ -1,0 +1,10 @@
+llama_index 
+llama-index-llms-huggingface 
+llama-index-embeddings-langchain 
+llama-index-graph-stores-nebula 
+InstructorEmbedding==1.0.1
+llama-index-llms-langchain
+langchain 
+langchain-community 
+wikipedia 
+llama-index-readers-wikipedia  
